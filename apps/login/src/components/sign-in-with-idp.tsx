@@ -61,16 +61,18 @@ export function SignInWithIdp({
     const Component = components[type];
     return Component ? (
       <div className="flex" key={`idp-${index}`}>
-        <input type="hidden" name="id" value={id} />
-        <input type="hidden" name="provider" value={idpTypeToSlug(type)} />
-        <input type="hidden" name="requestId" value={requestId} />
-        <input type="hidden" name="organization" value={organization} />
-        <input
-          type="hidden"
-          name="linkOnly"
-          value={linkOnly ? "true" : "false"}
-        />
-        <Component key={id} name={name} onClick={() => action(new FormData())} />
+        <form action={action}>
+          <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="provider" value={idpTypeToSlug(type)} />
+          <input type="hidden" name="requestId" value={requestId} />
+          <input type="hidden" name="organization" value={organization} />
+          <input
+            type="hidden"
+            name="linkOnly"
+            value={linkOnly ? "true" : "false"}
+          />
+          <Component key={id} name={name} />
+        </form>
       </div>
     ) : null;
   };

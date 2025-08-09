@@ -28,6 +28,8 @@ export async function redirectToIdp(
 
   const params = new URLSearchParams();
 
+  console.log("formData", formData);
+
   const linkOnly = formData.get("linkOnly") === "true";
   const requestId = formData.get("requestId") as string;
   const organization = formData.get("organization") as string;
