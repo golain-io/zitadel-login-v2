@@ -11,6 +11,7 @@ import {
 } from "@/lib/zitadel";
 import { Organization } from "@zitadel/proto/zitadel/org/v2/org_pb";
 import { headers } from "next/headers";
+import Image from "next/image";
 
 export default async function Page(props: {
   searchParams: Promise<Record<string | number | symbol, string | undefined>>;
@@ -28,6 +29,7 @@ export default async function Page(props: {
 
   let defaultOrganization;
   if (!organization) {
+    console.log("serviceUrl", serviceUrl);
     const org: Organization | null = await getDefaultOrg({
       serviceUrl,
     });
@@ -52,6 +54,8 @@ export default async function Page(props: {
   }).then((resp) => {
     return resp.identityProviders;
   });
+  console.log("defaultOrganization", defaultOrganization);
+  console.log("serviceUrl", serviceUrl);
 
   const branding = await getBrandingSettings({
     serviceUrl,

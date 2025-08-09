@@ -7,7 +7,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Alert } from "./alert";
 import { BackButton } from "./back-button";
-import { Button, ButtonVariants } from "./button";
+import { Button, ButtonSizes, ButtonVariants } from "./button";
 import { TextInput } from "./input";
 import { Spinner } from "./spinner";
 import { Translated } from "./translated";
@@ -51,7 +51,7 @@ export function UsernameForm({
 
   async function submitLoginName(values: Inputs, organization?: string) {
     setLoading(true);
-
+    console.log("organization id from username form")
     const res = await sendLoginname({
       loginName: values.loginName,
       organization,
@@ -137,19 +137,23 @@ export function UsernameForm({
         </div>
       )}
       <div className="mt-4 flex w-full flex-row items-center">
-        <BackButton data-testid="back-button" />
+        <div className="scale-110 transform">
+          <BackButton data-testid="back-button" />
+        </div>
         <span className="flex-grow"></span>
-        <Button
-          data-testid="submit-button"
-          type="submit"
-          className="self-end"
-          variant={ButtonVariants.Primary}
-          disabled={loading || !formState.isValid}
-          onClick={handleSubmit((e) => submitLoginName(e, organization))}
-        >
-          {loading && <Spinner className="h-5 w-5 mr-2" />}
-          <Translated i18nKey="submit" namespace="loginname" />
-        </Button>
+        <div className="scale-110 transform">
+          <Button
+            data-testid="submit-button"
+            type="submit"
+            className="self-end px-6 py-2.5 text-base" /* Increased padding and text size */
+            variant={ButtonVariants.Primary}
+            disabled={loading || !formState.isValid}
+            onClick={handleSubmit((e) => submitLoginName(e, organization))}
+          >
+            {loading && <Spinner className="h-5 w-5 mr-2" />}
+            <Translated i18nKey="submit" namespace="loginname" />
+          </Button>
+        </div>
       </div>
     </form>
   );

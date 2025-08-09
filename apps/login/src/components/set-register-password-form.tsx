@@ -21,9 +21,9 @@ import { Translated } from "./translated";
 
 type Inputs =
   | {
-      password: string;
-      confirmPassword: string;
-    }
+    password: string;
+    confirmPassword: string;
+  }
   | FieldValues;
 
 type Props = {
@@ -148,22 +148,27 @@ export function SetRegisterPasswordForm({
       {error && <Alert>{error}</Alert>}
 
       <div className="mt-8 flex w-full flex-row items-center justify-between">
-        <BackButton data-testid="back-button" />
-        <Button
-          type="submit"
-          variant={ButtonVariants.Primary}
-          disabled={
-            loading ||
-            !policyIsValid ||
-            !formState.isValid ||
-            watchPassword !== watchConfirmPassword
-          }
-          onClick={handleSubmit(submitRegister)}
-          data-testid="submit-button"
-        >
-          {loading && <Spinner className="h-5 w-5 mr-2" />}{" "}
-          <Translated i18nKey="password.submit" namespace="register" />
-        </Button>
+        <div className="scale-110 transform">
+          <BackButton data-testid="back-button" />
+        </div>
+        <div className="scale-110 transform">
+
+          <Button
+            type="submit"
+            variant={ButtonVariants.Primary}
+            disabled={
+              loading ||
+              !policyIsValid ||
+              !formState.isValid ||
+              watchPassword !== watchConfirmPassword
+            }
+            onClick={handleSubmit(submitRegister)}
+            data-testid="submit-button"
+          >
+            {loading && <Spinner className="h-5 w-5 mr-2" />}{" "}
+            <Translated i18nKey="password.submit" namespace="register" />
+          </Button>
+        </div>
       </div>
     </form>
   );

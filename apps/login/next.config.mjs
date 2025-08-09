@@ -1,4 +1,5 @@
 import createNextIntlPlugin from "next-intl/plugin";
+import { setupDevPlatform } from '@cloudflare/next-on-pages/next-dev';
 import { DEFAULT_CSP } from "./constants/csp.js";
 
 const withNextIntl = createNextIntlPlugin();
@@ -46,16 +47,14 @@ const imageRemotePatterns = [
     port: "",
     pathname: "/**",
   },
-];
-
-if (process.env.ZITADEL_API_URL) {
-  imageRemotePatterns.push({
+  {
     protocol: "https",
-    hostname: process.env.ZITADEL_API_URL?.replace("https://", "") || "",
+    hostname: "dev.zitadel.golain.io",
     port: "",
     pathname: "/**",
-  });
-}
+  }
+];
+
 
 const nextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
@@ -66,6 +65,12 @@ const nextConfig = {
   },
   images: {
     remotePatterns: imageRemotePatterns,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ['image/webp'],
+    minimumCacheTTL: 60,
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
   eslint: {
     ignoreDuringBuilds: true,
@@ -79,5 +84,9 @@ const nextConfig = {
     ];
   },
 };
+
+if (process.env.NODE_ENV === 'development') {
+  await setupDevPlatform();
+}
 
 export default withNextIntl(nextConfig);

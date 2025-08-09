@@ -74,6 +74,7 @@ const ORG_DOMAIN_SCOPE_REGEX = /urn:zitadel:iam:org:domain:primary:(.+)/; // TOD
 const IDP_SCOPE_REGEX = /urn:zitadel:iam:org:idp:id:(.+)/;
 
 export async function GET(request: NextRequest) {
+  console.log("GET");
   const _headers = await headers();
   const { serviceUrl } = getServiceUrlFromHeaders(_headers);
 
@@ -91,7 +92,13 @@ export async function GET(request: NextRequest) {
         ? `saml_${samlRequestId}`
         : undefined);
 
+  console.log("Final requestId:", requestId);
+
   const sessionId = searchParams.get("sessionId");
+
+  // print route
+  console.log("Request URL:", request.url);
+  console.log("Request Params:", searchParams.toString());
 
   // TODO: find a better way to handle _rsc (react server components) requests and block them to avoid conflicts when creating oidc callback
   const _rsc = searchParams.get("_rsc");
@@ -138,11 +145,14 @@ export async function GET(request: NextRequest) {
       authRequestId: requestId.replace("oidc_", ""),
     });
 
+    console.log("Auth Request:", authRequest);
+
     let organization = "";
     let suffix = "";
     let idpId = "";
 
     if (authRequest?.scope) {
+      console.log("Auth Request Scopes:", authRequest.scope);
       const orgScope = authRequest.scope.find((s: string) =>
         ORG_SCOPE_REGEX.test(s),
       );
@@ -151,9 +161,12 @@ export async function GET(request: NextRequest) {
         IDP_SCOPE_REGEX.test(s),
       );
 
+      console.log("Org Scope:", orgScope);
+      console.log("IDP Scope:", idpScope);
       if (orgScope) {
         const matched = ORG_SCOPE_REGEX.exec(orgScope);
         organization = matched?.[1] ?? "";
+        console.log("organization", organization);
       } else {
         const orgDomainScope = authRequest.scope.find((s: string) =>
           ORG_DOMAIN_SCOPE_REGEX.test(s),
