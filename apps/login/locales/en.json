@@ -20,7 +20,7 @@
     }
   },
   "loginname": {
-    "title": "Welcome to OmniWOT!",
+    "title": "Welcome to Golain!",
     "description": "Enter your login data.",
     "register": "Register new user",
     "submit": "Continue"
@@ -161,7 +161,7 @@
       "description": "Provide email, first and last name to register."
     },
     "title": "Register",
-    "description": "Create your OmniWOT account.",
+    "description": "Create your Golain account.",
     "noMethodAvailableWarning": "No authentication method available. Please contact your administrator.",
     "selectMethod": "Select the method you would like to authenticate",
     "agreeTo": "To register you must agree to the terms and conditions",

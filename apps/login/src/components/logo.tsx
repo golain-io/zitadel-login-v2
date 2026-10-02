@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 type Props = {
   height?: number;
   width?: number;
@@ -7,14 +5,12 @@ type Props = {
 
 export function Logo({ height = 40, width = 147.5 }: Props) {
   return (
-    <div>
-      <Image
-        height={height}
-        width={width}
-        src="/svg/omniwot-branding.svg"
-        alt="logo"
-        priority={true}
-      />
-    </div>
+    <span
+      aria-label="Golain"
+      className="inline-flex items-center text-3xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100"
+      style={{ height, width }}
+    >
+      Golain
+    </span>
   );
 }
