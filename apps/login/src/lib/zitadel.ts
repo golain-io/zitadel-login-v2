@@ -50,19 +50,15 @@ import {
   VerifyPasskeyRegistrationRequest,
   VerifyU2FRegistrationRequest,
 } from "@zitadel/proto/zitadel/user/v2/user_service_pb";
-import { unstable_cacheLife as cacheLife } from "next/cache";
+import { cache } from "react";
 import { getUserAgent } from "./fingerprint";
 import { setSAMLFormCookie } from "./saml";
 import { createServiceForHost } from "./service";
 
 const useCache = process.env.DEBUG !== "true";
 
-async function cacheWrapper<T>(callback: Promise<T>) {
-  "use cache";
-  cacheLife("hours");
-
-  return callback;
-}
+// Keep memoization within a render request; stable Next.js needs no canary flags.
+const cacheWrapper = cache(<T>(callback: Promise<T>): Promise<T> => callback);
 
 export async function getHostedLoginTranslation({
   serviceUrl,
