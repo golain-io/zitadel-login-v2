@@ -4,6 +4,22 @@ Deploy branch `deploy/golain`. It starts from `deploy/omniwot` and uses a single
 centered login card, Golain text branding, and the existing Zitadel login flows.
 There is no illustration, background image, split layout, or analytics embed.
 
+## Vercel settings
+
+In the Vercel project's Build and Deployment settings:
+
+- **Root Directory:** `apps/login`
+- **Include source files outside of the Root Directory in the Build Step:** enabled
+- **Framework Preset:** Next.js
+- **Production Branch:** `deploy/golain` if this branch should serve production
+- **Output Directory:** default (do not override)
+
+The checked-in `apps/login/vercel.json` installs the workspace dependencies and
+uses Turborepo to generate protobufs, build the shared client, and build Login V2.
+Remove dashboard overrides for Install Command and Build Command to use it.
+After changing Root Directory, redeploy the latest commit. Root Directory is a
+Vercel project setting; the config file does not change it automatically.
+
 For a Next.js deployment, use `apps/login` as the application root and install from
 the monorepo with its pinned pnpm version. See the existing README for build and
 hosting commands. From the repo root, build with:
